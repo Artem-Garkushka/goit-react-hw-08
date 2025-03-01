@@ -1,13 +1,15 @@
 import { useDispatch } from 'react-redux';
 import { register } from '../../redux/auth/authOps';
-import css from './RegisterForm.module.css';
+import { useNavigate } from 'react-router-dom';
+import css from './RegistrationForm.module.css';
 
-export const RegisterForm = () => {
+export const RegistrationForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const form = e.target;
+    const form = e.currentTarget;
 
     dispatch(
       register({
@@ -15,7 +17,14 @@ export const RegisterForm = () => {
         email: form.elements.email.value,
         password: form.elements.password.value,
       })
-    );
+    )
+      .unwrap()
+      .then(() => {
+        navigate('/contacts');
+      })
+      .catch(() => {
+        console.log('registration error');
+      });
 
     form.reset();
   };
@@ -23,7 +32,7 @@ export const RegisterForm = () => {
   return (
     <form className={css.form} onSubmit={handleSubmit} autoComplete="off">
       <label className={css.label}>
-        Username
+        Name
         <input type="text" name="name" />
       </label>
       <label className={css.label}>
@@ -38,3 +47,5 @@ export const RegisterForm = () => {
     </form>
   );
 };
+
+export default RegistrationForm;

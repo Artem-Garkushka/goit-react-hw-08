@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { register } from '../../redux/auth/operations';
+import { register } from '..../redux/auth/operations';
 import { useNavigate } from 'react-router-dom';
 import css from './RegisterForm.module.css';
 

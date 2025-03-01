@@ -1,9 +1,10 @@
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { register } from '../../redux/auth/authOps';
 import { useNavigate } from 'react-router-dom';
 import css from './RegistrationForm.module.css';
 
-export const RegistrationForm = () => {
+export const RegisterForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -33,19 +34,19 @@ export const RegistrationForm = () => {
     <form className={css.form} onSubmit={handleSubmit} autoComplete="off">
       <label className={css.label}>
         Name
-        <input type="text" name="name" />
+        <input type="text" name="name" className={css.input} />
       </label>
       <label className={css.label}>
         Email
-        <input type="email" name="email" />
+        <input type="email" name="email" className={css.input} />
       </label>
       <label className={css.label}>
         Password
-        <input type="password" name="password" />
+        <input type="password" name="password" className={css.input} />
       </label>
-      <button type="submit">Register</button>
+      <button type="submit" className={css.button}>Register</button>
     </form>
   );
 };
 
-export default RegistrationForm;
+export default RegisterForm;

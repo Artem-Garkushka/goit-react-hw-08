@@ -25,6 +25,19 @@ label {
   transition: color 0.25s ease;
 }
 
+input[type="text"] {
+  flex-grow: 1;
+  padding: 10px 10px 10px 40px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: border-color 0.25s ease;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: #4a90e2;
+}
+
 input[type="email"] {
   flex-grow: 1;
   padding: 10px 10px 10px 40px;

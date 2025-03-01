@@ -1,18 +1,25 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '..../redux/auth/operations';
-import { selectUser } from '../../redux/auth/authSelectors';
-import css from './UserMenu.module.css';
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../../redux/auth/operations";
+import { selectUser } from "../../redux/auth/selectors";
+import c from "./UserMenu.module.css";
+import { TbLogin2 } from "react-icons/tb";
 
-export const UserMenu = () => {
+const UserMenu = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
   return (
-    <div className={css.wrapper}>
-      <p className={css.username}>Welcome, {user.name}</p>
-      <button type="button" onClick={() => dispatch(logout())}>
-        Logout
+    <div className={c.userMenu}>
+      <p className={c.name}>{user.name}</p>
+      <button
+        className={c.btnExit}
+        type="button"
+        onClick={() => dispatch(logOut())}
+      >
+        <TbLogin2 className={c.iconLogOut} />
       </button>
     </div>
   );
 };
+
+export default UserMenu;

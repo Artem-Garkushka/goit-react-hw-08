@@ -1,11 +1,14 @@
-import DocumentTitle from '../../components/DocumentTitle';
-import { LoginForm } from '../../components/LoginForm/LoginForm';
+import LoginForm from "../../components/LoginForm/LoginForm";
+import { TbLogin2 } from "react-icons/tb";
+import c from "./LoginPage.module.css";
 
-export default function LoginPage() {
+const LoginPage = () => {
   return (
     <div>
-      <DocumentTitle>Login</DocumentTitle>
+      <TbLogin2 className={c.iconLogin} />
       <LoginForm />
     </div>
   );
-}
+};
+
+export default LoginPage;

@@ -1,67 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchContacts, addContact, deleteContact } from '../../redux/contacts/contactOperations';
-import { selectContacts } from '../../redux/contacts/contactsSelectors';
-import css from './ContactsPage.module.css';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import ContactForm from "../../components/ContactForm/ContactForm";
+import SearchBox from "../../components/SearchBox/SearchBox";
+import ContactList from "../../components/ContactList/ContactList";
+import { fetchContacts } from "../../redux/contacts/operations";
+import { selectIsLoading } from "../../redux/contacts/selectors";
+import { selectIsLoggedIn } from "../../redux/auth/selectors";
+import { RiContactsLine } from "react-icons/ri";
 
 const ContactsPage = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const isLoading = useSelector(selectIsLoading);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
-
-  const handleAddContact = (e) => {
-    e.preventDefault();
-    dispatch(addContact({ name, number }));
-    setName('');
-    setNumber('');
-  };
-
-  const handleDeleteContact = (id) => {
-    dispatch(deleteContact(id));
-  };
+    if (isLoggedIn) {
+      dispatch(fetchContacts());
+    }
+  }, [dispatch, isLoggedIn]);
 
   return (
-    <div className={css.contactsPage}>
-      <h1>Contacts</h1>
-      <form onSubmit={handleAddContact} className={css.form}>
-        <label className={css.label}>
-          Name
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className={css.input}
-            required
-          />
-        </label>
-        <label className={css.label}>
-          Number
-          <input
-            type="text"
-            value={number}
-            onChange={(e) => setNumber(e.target.value)}
-            className={css.input}
-            required
-          />
-        </label>
-        <button type="submit" className={css.button}>Add Contact</button>
-      </form>
-      <ul className={css.contactsList}>
-        {contacts.map((contact) => (
-          <li key={contact.id} className={css.contactItem}>
-            <p className={css.contactName}>{contact.name}: {contact.number}</p>
-            <button onClick={() => handleDeleteContact(contact.id)} className={css.deleteButton}>
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <h2>
+        <RiContactsLine />
+        Contacts
+      </h2>
+      <ContactForm />
+      {isLoading && <p>Loading...</p>}
+      <SearchBox />
+      <ContactList />
+    </>
   );
 };
 

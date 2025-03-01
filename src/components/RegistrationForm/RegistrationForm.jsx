@@ -1,30 +1,29 @@
 import { useDispatch } from "react-redux";
-import { logIn } from "../../redux/auth/operations";
+import { register } from "../../redux/auth/operations";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import c from "./LoginForm.module.css";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-
 import { FaPen } from "react-icons/fa";
+import { PiPasswordLight } from "react-icons/pi";
+import c from "./RegistrationForm.module.css";
 
 const validationSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(3, "Min length 3 characters!")
+    .max(50, "Max length 50 characters!")
+    .required("Enter name"),
   email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string().required("Required"),
 });
 
-const LoginForm = () => {
+const RegistrationForm = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleSubmit = (values, { resetForm }) => {
-    dispatch(logIn(values))
+    dispatch(register(values))
       .unwrap()
-      .then((response) => {
-        toast.success(`Welcome, ${response.user.name}`);
-        navigate("/contacts", { replace: true });
-      })
-      .catch(() => toast.error("Wrong email or password"));
+      .then((response) => toast.success(`Welcome, ${response.name}`))
+      .catch(() => toast.error("Email is already in use"));
 
     resetForm();
   };
@@ -32,11 +31,19 @@ const LoginForm = () => {
   return (
     <div>
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ name: "", email: "", password: "" }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         <Form className={c.form}>
+          <div className={c.inputContainer}>
+            <label htmlFor="name">Name</label>
+            <div className={c.inputWrapper}>
+              <Field type="text" name="name" placeholder="Name" />
+              <FaPen className={c.icon} />
+            </div>
+            <ErrorMessage className={c.error} name="name" component="span" />
+          </div>
           <div className={c.inputContainer}>
             <label htmlFor="email">Email</label>
             <div className={c.inputWrapper}>
@@ -49,7 +56,7 @@ const LoginForm = () => {
             <label htmlFor="password">Password</label>
             <div className={c.inputWrapper}>
               <Field type="password" name="password" placeholder="Password" />
-              <FaPen className={c.icon} />
+              <PiPasswordLight className={c.icon} />
             </div>
             <ErrorMessage
               className={c.error}
@@ -57,9 +64,8 @@ const LoginForm = () => {
               component="span"
             />
           </div>
-
           <button className={c.btnForm} type="submit">
-            Login
+            Register
           </button>
         </Form>
       </Formik>
@@ -67,4 +73,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegistrationForm;

@@ -4,7 +4,7 @@ import ContactForm from "../../components/ContactForm/ContactForm";
 import SearchBox from "../../components/SearchBox/SearchBox";
 import ContactList from "../../components/ContactList/ContactList";
 import { fetchContacts } from "../../redux/contacts/operations";
-import { selectIsLoading, selectFilteredContacts, selectError } from "../../redux/contacts/selectors";
+import { selectIsLoading } from "../../redux/contacts/selectors";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import { RiContactsLine } from "react-icons/ri";
 
@@ -12,8 +12,6 @@ const ContactsPage = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const contacts = useSelector(selectFilteredContacts);
-  const error = useSelector(selectError);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -29,9 +27,8 @@ const ContactsPage = () => {
       </h2>
       <ContactForm />
       {isLoading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
       <SearchBox />
-      <ContactList contacts={contacts} />
+      <ContactList />
     </>
   );
 };

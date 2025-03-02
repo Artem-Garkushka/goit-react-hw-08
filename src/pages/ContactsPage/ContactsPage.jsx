@@ -5,7 +5,7 @@ import SearchBox from "../../components/SearchBox/SearchBox";
 import ContactList from "../../components/ContactList/ContactList";
 import { fetchContacts } from "../../redux/contacts/operations";
 import { selectIsLoading, selectFilteredContacts, selectError } from "../../redux/contacts/selectors";
-import { selectIsLoggedIn } from "../../redux/auth/Selectors";
+import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import { RiContactsLine } from "react-icons/ri";
 
 const ContactsPage = () => {
